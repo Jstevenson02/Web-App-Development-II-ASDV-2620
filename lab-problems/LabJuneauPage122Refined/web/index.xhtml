@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+    </h:head>
+    <h:body>
+        <h:form id="componentForm">
+            <p>Book Recommendation: Java 7 Recipes
+
+                <br/>
+                <h:graphicImage  style=" max-height: 300px; max-width: 300px;" library="images"  name="picture.png"/>     
+                <br/>
+
+                <p>
+                    Use the following form to add an author to the list.
+                </p>
+
+                <!--First Name field-->
+                <h:outputLabel for="newAuthorFirst" value="New Author First Name: "/>
+                <h:inputText id="newAuthorFirst"  value="#{authorController.firstName}"/>
+                <br/>
+
+                <!--Last Name field-->
+                <h:outputLabel for="newAuthorLast" value="New Author Last Name: "/>
+                <h:inputText id="newAuthorLast" value="#{authorController.lastName}"/>
+                <br/>
+
+                <!--Bio field-->
+                <h:outputLabel for="bio" value="Bio:"/>
+                <br/>
+                <h:inputTextarea id="bio" cols="20" rows="5"
+                                 value="#{authorController.bio}"/>
+                <br/>
+
+                <!--Add author button-->
+                <br/>
+                <h:commandButton id="addAuthor" value="Add" action="#{authorController.add() }" />
+                <br/>
+                <br/>
+                <!--Remove author-->
+                       <br/>
+                <h:commandButton id="removeAuthor" value="Remove" action="#{authorController.remove()  }" />
+                <br/>
+                <br/>
+
+                <!--Data table--> 
+                <h:dataTable id="authorTable" value="#{authorController.vdb.getList()}"
+                             var="author">
+
+                    <f:facet name="header">
+                        Authors
+                    </f:facet>
+
+                    <f:facet name="header" class="">
+                        BIo
+                    </f:facet>
+
+                    <!--Output array-->
+                    <h:column >
+                        <h:outputText id="authorFirstName" value="#{author.first} #{author.last}"/>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText id="authorBio" value="#{author.bio} "/>
+                    </h:column>
+                </h:dataTable>
+            </p>
+        </h:form>
+    </h:body>
+</html>
