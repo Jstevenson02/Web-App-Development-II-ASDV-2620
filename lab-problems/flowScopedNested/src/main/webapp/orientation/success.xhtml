@@ -4,16 +4,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>confirm </title>
-    </h:head>   
+    </h:head>    
     <h:body>
-        <h3>Second page in the registration flow</h3>
-        <br>  Is flow alive? #{null != facesContext.application.flowHandler.currentFlow} </br>
-        <br>  Flow Id: #{facesContext.application.flowHandler.currentFlow.id} </br>
-        You are registered as:#{registrationBean.firstName} #{registrationBean.lastName}
-        <h:form prependId="false">           
-            <h:commandButton value="Back (still in flow back to modify)" action="registration"/>
-            <h:commandButton value="Next (exit flow)" action="taskFlowReturnDone"/>
-        </h:form>
+        <b>Second page in the 'orientation' flow (nested flow)</b>
+        <b>IS flow alive #{null != facesContext.application.flowHandler.currentFlow}</b><br/>
+        <b>Flow Id: #{facesContext.application.flowHandler.currentFlow.id}</b><br/> 
+        You are registered as #{flowScope.firstName} #{flowScope.lastName} 
+        (#{orientationBean.regCode})<br/>
+        You will attend the orientation on #{orientationBean.day} 
+        after #{orientationBean.time}<br/><br/>
+        <h:button value="Exit Registration" outcome="taskFlowReturnThanks"/>
     </h:body>
 </html>
 

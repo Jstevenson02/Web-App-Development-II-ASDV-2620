@@ -15,26 +15,23 @@ import javax.faces.flow.builder.FlowDefinition;
  *
  * @author jacob
  */
-
 public class Orientation implements Serializable {
 
     @Produces
     @FlowDefinition
-    public Flow defineFlow(@FlowBuilderParameter FlowBuilder flowBuilder) {
+    public Flow defineFlowOrientationOrAnythingYouWant(@FlowBuilderParameter FlowBuilder flowBuilder) {
 
         String flowId = "orientation";
         flowBuilder.id("", flowId);
+
         flowBuilder.viewNode(flowId, "/" + flowId + "/" + flowId + ".xhtml").markAsStartNode();
-        flowBuilder.viewNode("confirm-id", "/" + flowId + "/confirm.xhtml");
-        flowBuilder.viewNode("thanks-id", "/" + flowId + "/thanks.xhtml");
 
-        flowBuilder.returnNode("taskFlowReturnIndex").fromOutcome("/index");
-        flowBuilder.returnNode("taskFlowReturnDone").fromOutcome("#{registrationBean.returnValue}");
+        // flowBuilder.viewNode("sucsess-id", "/" + flowId + "/success.xhtml");
+        flowBuilder.returnNode("taskFlowReturnThanks").fromOutcome("/registration/thanks");
 
-        flowBuilder.flowCallNode("callOrientation").flowReference("", "orientation").
-                outboundParameter("firstNameParam", "#{registrationBean.firstName}").
-                outboundParameter("lastNameParam", "#{registrationBean.lastName}").
-                outboundParameter("studentRegistrationCode", "A1FS");
+        flowBuilder.inboundParameter("firstNameParam", "#{flowScope.firstName}");
+        flowBuilder.inboundParameter("lastNameParam", "#{flowScope.lastName}");
+        flowBuilder.inboundParameter("studentRegistrationCode", "#{orientationBean.regCode}");
 
         return flowBuilder.getFlow();
     }

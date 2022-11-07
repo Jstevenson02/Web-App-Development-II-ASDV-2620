@@ -15,7 +15,6 @@ import javax.faces.flow.builder.FlowDefinition;
  *
  * @author jacob
  */
-
 public class Registration implements Serializable {
 
     @Produces
@@ -27,7 +26,7 @@ public class Registration implements Serializable {
         flowBuilder.viewNode(flowId, "/" + flowId + "/" + flowId + ".xhtml").markAsStartNode();
         flowBuilder.viewNode("confirm-id", "/" + flowId + "/confirm.xhtml");
         flowBuilder.viewNode("thanks-id", "/" + flowId + "/thanks.xhtml");
-        
+
         flowBuilder.returnNode("taskFlowReturnIndex").fromOutcome("/confrim");
         flowBuilder.returnNode("taskFlowReturnIndex").fromOutcome("/index");
         flowBuilder.returnNode("taskFlowReturnDone").fromOutcome("#{registrationBean.returnValue}");
