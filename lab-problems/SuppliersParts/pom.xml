@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>practice</groupId>
+    <groupId>edu.slcc.asdv</groupId>
     <artifactId>SuppliersParts</artifactId>
-    <version>1.0</version>
+    <version>1</version>
     <packaging>war</packaging>
-    <name>SuppliersParts-1.0</name>
+    <name>SuppliersParts-1</name>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -13,7 +13,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <jakartaee>8.0.0</jakartaee>
+        <jakartaee>9.0.0</jakartaee>
     </properties>
     
     <dependencies>
@@ -30,7 +30,7 @@
         </dependency>
     </dependencies>
     
-     <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
