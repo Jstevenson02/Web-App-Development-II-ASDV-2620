@@ -11,7 +11,7 @@
     <h:body>
 
         <h:form>
-            <h1>   ASDV @SLCC, Suppliers Parts Database </h1>
+            <h1>   ASDV@SLCC Supplier Database </h1>
 
             <h:panelGrid columns="2">
                 <h:outputLabel styleClass="label" value="Database Name"/>
@@ -46,6 +46,10 @@
                 <h:commandButton value="Delete Supplier" action="#{suppliers.deleteSupplier}"/>
                 <h:commandButton value="List All Suppliers" action="#{suppliers.listAll}"/>
                 <h:commandButton value="Clear" action="#{suppliers.clear}"/>
+                <h:commandButton value="SupplierDB" action="index.xhtml"/>
+                <h:commandButton value="PartDB" action="part.xhtml"/>
+                <h:commandButton value="SupplierPartsDB" action="sp.xhtml"/>
+
             </h:panelGrid>
 
             <h:panelGrid>

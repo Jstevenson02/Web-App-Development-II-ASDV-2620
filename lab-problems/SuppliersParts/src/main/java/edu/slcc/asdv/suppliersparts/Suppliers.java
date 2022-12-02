@@ -8,43 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import utilites.Connections;
 
-/**
- *
- * @author a. v. markou
- */
-@Named(value = "suppliers")
-@SessionScoped
 public class Suppliers implements Serializable {
-
-    private String databaseName;
-
-    /**
-     * Get the value of databaseName
-     *
-     * @return the value of databaseName
-     */
-    public String getDatabaseName() {
-        return databaseName;
-    }
-
-    /**
-     * Set the value of databaseName
-     *
-     * @param databaseName new value of databaseName
-     */
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
-
-    private static final Logger LOG = Logger.getLogger(Suppliers.class.getName());
 
     String snumber = "";
     String sname = "";
@@ -55,7 +20,7 @@ public class Suppliers implements Serializable {
     String result = "";
 
     public Suppliers() {
-
+        connection();
     }
 
     public String getSnumber() {
@@ -99,15 +64,50 @@ public class Suppliers implements Serializable {
     }
 
     public String getConnectionResponse() {
-        Connection con = Connections.getConnection();
-
+        Connection con = connection();
+        if (con == null) {
+            result = "cannot connect to database";
+            return null;
+        }
         if (con != null) {
             return "<p style=\"color:green\">Connection succesfull! <br />";
         } else {
-
+            connection();
             return "<p style=\"color:red\">Connection failed! <br />";
         }
 
+    }
+
+    private Connection connection() //throws InstantiationException, IllegalAccessException
+    {
+
+        String databaseName = "sp";
+        String userName = "root";
+        String password = "";
+        String URL2 = "com.mysql.jdbc.Driver";
+        Connection con = null;
+
+        try {// Load Sun's jdbc driver
+            Class.forName(URL2).newInstance();
+            System.out.println("JDBC Driver loaded!");
+        } catch (Exception e) // driver not found
+        {
+            System.err.println("Unable to load database driver");
+            System.err.println("Details : " + e);
+            return null;
+        }
+
+        String ip = "localhost"; //internet connection
+        String url = "jdbc:mysql://" + ip + ":8889/" + databaseName;
+        try {
+            con = DriverManager.getConnection(url, userName, password);
+            con.setReadOnly(false);
+        } catch (Exception e) {
+            System.err.println(" *** " + e.toString());
+            return null;
+        }
+        System.out.println("+++  connection successfull");
+        return con;
     }
 
     public void clear() {
@@ -120,7 +120,7 @@ public class Suppliers implements Serializable {
     }
 
     public void listAll() {
-        Connection con = Connections.getConnection();
+        Connection con = connection();
         if (con == null) {
             result = "cannot connect to database";
             return;
@@ -137,23 +137,21 @@ public class Suppliers implements Serializable {
             while (rs.next()) {
                 String sNumber = rs.getString(1) + " ";
                 String sName = rs.getString(2) + " ";
-                String status = rs.getString(3) + " ";
+                String status = rs.getInt(3) + " ";
                 String bdate = rs.getDate(4) + " ";
                 String city = rs.getString(5) + " ";
                 table += sNumber + sName + bdate + status + city + "</br>";
             }
         } catch (Exception ex) {
-            Logger.getLogger(Suppliers.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         } finally {
             try {
-                Connections.closeDatabaseConnection(con);
+                closeDatabaseConnection(con);
                 // close the resources 
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException sqle) {
-                Logger.getLogger(Suppliers.class.getName()).log(Level.WARNING, null, sqle);
                 sqle.printStackTrace();
             }
         }
@@ -161,7 +159,7 @@ public class Suppliers implements Serializable {
     }
 
     public void viewSupplier() {
-        Connection con = Connections.getConnection();
+        Connection con = connection();
         if (con == null) {
             result = "cannot connect to database";
             return;
@@ -193,17 +191,14 @@ public class Suppliers implements Serializable {
                 ret = this.snumber + " doesn't exist.";
             }
         } catch (Exception ex) {
-            Logger.getLogger(Suppliers.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         } finally {
             try {
-                Connections.closeDatabaseConnection(con);
+                this.closeDatabaseConnection(con);
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException sqle) {
-                Logger.getLogger(Suppliers.class.getName()).log(Level.WARNING, null, sqle);
-
                 sqle.printStackTrace();
             }
         }
@@ -211,7 +206,7 @@ public class Suppliers implements Serializable {
     }
 
     public void updateSupplier() {
-        Connection con = Connections.getConnection();
+        Connection con = connection();
         if (con == null) {
             result = "cannot connect to database";
             return;
@@ -234,12 +229,10 @@ public class Suppliers implements Serializable {
             result = "number of rows affected: " + updateCount;
 
         } catch (Exception ex) {
-            Logger.getLogger(Suppliers.class.getName()).log(Level.SEVERE, null, ex);
-
             System.err.println(ex.toString());
         } finally {
             try {
-                Connections.closeDatabaseConnection(con);
+                this.closeDatabaseConnection(con);
                 // close the resources 
                 if (updateSupplier != null) {
                     updateSupplier.close();
@@ -253,7 +246,7 @@ public class Suppliers implements Serializable {
 
     public void deleteSupplier() {
 
-        Connection con = Connections.getConnection();
+        Connection con = connection();
         if (con == null) {
             result = "cannot connect to database";
             return;
@@ -262,20 +255,16 @@ public class Suppliers implements Serializable {
         int rowsAffected = -1;
 
         try {
-
             String query = "DELETE FROM supplier WHERE snumber=? ";
             ps = con.prepareStatement(query);
             ps.setString(1, snumber);
             rowsAffected = ps.executeUpdate();
             result = "number of rows affected: " + rowsAffected;
-
         } catch (Exception ex) {
-            Logger.getLogger(Suppliers.class.getName()).log(Level.SEVERE, null, ex);
-
             System.err.println(ex.toString());
         } finally {
             try {
-                Connections.closeDatabaseConnection(con);
+                this.closeDatabaseConnection(con);
                 // close the resources 
                 if (ps != null) {
                     ps.close();
@@ -288,7 +277,7 @@ public class Suppliers implements Serializable {
     }
 
     public void insertSupplier() {
-        Connection con = Connections.getConnection();
+        Connection con = connection();
         if (con == null) {
             result = "cannot connect to database";
             return;
@@ -307,22 +296,21 @@ public class Suppliers implements Serializable {
 
             int updateCount = updateSupplier.executeUpdate();
 
-            result = "number of rows affected: " + updateCount;
+            result = "Number of rows affected: " + updateCount;
         } catch (Exception ex) {
-            Logger.getLogger(Suppliers.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println(ex.toString());
             result = ex.toString();
         } finally {
             try {
-                Connections.closeDatabaseConnection(con);
+                this.closeDatabaseConnection(con);
                 // close the resources 
                 if (updateSupplier != null) {
                     updateSupplier.close();
                 }
 
             } catch (SQLException e) {
-
                 System.err.println(e.toString());
+                result = e.toString();
             }
         }
     }
@@ -344,4 +332,19 @@ public class Suppliers implements Serializable {
 
     }
 
+    public void closeDatabaseConnection(Connection con) {
+        try {
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            result = e.toString();
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        Suppliers db = new Suppliers();
+        db.connection();
+    }
 }

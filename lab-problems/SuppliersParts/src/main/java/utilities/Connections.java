@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package utilites;
+package utilities;
 
 import edu.slcc.asdv.suppliersparts.Suppliers;
 import jakarta.faces.application.FacesMessage;
@@ -10,12 +6,12 @@ import jakarta.faces.context.FacesContext;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
+import java.util.logging.*;
 import java.util.logging.Logger;
 
 /**
  *
- * @author jacob
+ * @author nicol
  */
 public class Connections {
 
@@ -39,7 +35,7 @@ public class Connections {
         Connection con = null;
 
         try {
-            con = getConnection("supplier_parts", "root", "", "localhost", "3306", "com.mysql.cj.jdbc.Driver", "jdbc:mysql");
+            con = getConnection("sp", "root", "", "localhost", "3306", "com.mysql.cj.jdbc.Driver", "jdbc:mysql");
             System.out.println("abc");
 
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {

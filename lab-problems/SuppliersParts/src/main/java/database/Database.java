@@ -1,5 +1,7 @@
 package database;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,8 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+
 
 /**
  *
@@ -89,7 +90,7 @@ public class Database implements Serializable {
     private Connection connection() //throws InstantiationException, IllegalAccessException
     {
 
-        String databaseName = "supplier_parts";
+        String databaseName = "sp";
         String userName = "root";
         String password = "";
         String URL2 = "com.mysql.jdbc.Driver";

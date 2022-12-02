@@ -81,7 +81,7 @@ public class Database implements Serializable {
     private Connection connection() //throws InstantiationException, IllegalAccessException
     {
 
-        String databaseName = "suppliers_parts";
+        String databaseName = "sp";
         String userName = "root";
         String password = "";
         String URL2 = "com.mysql.jdbc.Driver";
