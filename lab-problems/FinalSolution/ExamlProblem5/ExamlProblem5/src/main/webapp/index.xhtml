@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css"/>
+        <title>Supplier Parts DB</title>
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <h1>   ASDV @SLCC, Exam Problem 5 </h1>
+       
+
+
+
+            <h:panelGrid columns="8">
+                <h:outputLabel styleClass="label" value="Passenger Name"/>
+                <h:inputText 
+                    value="#{byName.pname}"/>
+
+            </h:panelGrid>
+
+            <h:panelGrid columns="6">
+                <h:commandButton styleClass="button" value="List all passengers" action="#{byName.viewAll}"/>
+                <h:commandButton styleClass="button" value="View passsenger by name" action="#{byName.viewByName()}"/>
+                <h:commandButton value="Clear" action="#{byName.clear}"/>
+            </h:panelGrid>
+
+            <h:panelGrid>
+                <h:outputText escape="false" style="color:green" 
+                              value="#{byName.result}">
+                </h:outputText>
+            </h:panelGrid>
+
+        </h:form>
+    </h:body>
+</html>
