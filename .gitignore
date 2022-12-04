@@ -6,7 +6,14 @@
 /lab-problems/SuppliersParts/target/
 /lab-problems/FlashText/nbproject/private/
 /lab-problems/FlashText/build/
+<<<<<<< HEAD
 /lab-problems/Problem1/target/
 /lab-problems/Problem2/target/
 /lab-problems/Problem3/target/
 /lab-problems/Problem4/target/
+=======
+/machine-problems/MVC-Architecture/target/
+/machine-problems/MP2-JFX/nbproject/private/
+/machine-problems/MP2-JFX/build/
+/machine-problems/MP2-JFX/dist/
+>>>>>>> 82b1ac842d3e1e4c3d8c3a86661a15b35f9a07a9
